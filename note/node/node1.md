@@ -21,7 +21,7 @@ REPL( Read-eval-print loop ) ，输入-求值-输出 循环。
 
 初试 nodejs ，你会发现每次修改文件后，都要重启服务才能见到效果，这实在是有点坑爹。
 
-不过还有， `supervisor` 可以搞定这个。它会监测代码改动，并自动重启。
+不过还好， `supervisor` 可以搞定这个。它会监测代码改动，并自动重启。
 
 首先，使用 npm 来安装：
 
@@ -41,7 +41,7 @@ supervisor app.js
 
 ### 阻塞与线程
 
-大部分语言，遇到耗时操作时，会阻塞该现成，将 cup 转向其他线程，稍后再转回。
+大部分语言，遇到耗时操作时，会阻塞该线程，将 cup 转向其他线程，稍后再转回。
 
 js 的单线程显然不行。但是可以通过回调函数异步执行，详见 [也谈 setTimeout](https://github.com/jiangyuan/blog/blob/master/blog/%E4%B9%9F%E8%B0%88%20setTimeout.md)。
 
@@ -52,7 +52,7 @@ js 的单线程显然不行。但是可以通过回调函数异步执行，详�
 
 ### 事件
 
-javascript 事件机制也就不多说。值得一提的是，`nodejs` 和 `jQuery` 的事件如出一辙。
+javascript 事件机制也就不多说。值得一提的是，`nodejs` 和 `jQuery` 的事件如出一辙，也不知道是巧合还是互相借鉴。
 
 ```js
 var EE = require( "events" ).EventEmitter;
@@ -62,13 +62,11 @@ event.on( "custom", function() {
     console.log( "fired" );
 });
 
-
 setTimeout(function() {
     event.emit( "custom" );
 }, 2000 );
 ```
 
-也不知道是巧合还是互相借鉴。
 
 #### nodejs 的事件循环机制
 

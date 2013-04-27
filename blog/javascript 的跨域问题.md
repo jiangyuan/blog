@@ -197,5 +197,15 @@ parent.parent.location.hash = location.hash.substring(1);
 
 整个方法就是这样了，这个方法的出现充分证明了 javascript 跨域实在是，坑爹！
 
+***
+时间隔的有点久了
+***
+
+## window.name 跨域
+
+上面的 location.hash 确实问题很多，数据暴露、数据容量小等等，老实说，如果能解决问题，还是不错的。
+
+庆幸的是，就有那么一种方法能有达到上述效果，那就是利用 window.name 。
+
 
 

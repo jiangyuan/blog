@@ -207,5 +207,33 @@ parent.parent.location.hash = location.hash.substring(1);
 
 庆幸的是，就有那么一种方法能有达到上述效果，那就是利用 window.name 。
 
+这篇文章写得很清楚，[使用 window.name 解决跨域问题](http://www.planabc.net/2008/09/01/window_name_transport/)。
+
+当然，别人写那还是别人的，自己必须要研究一遍啊。
+
+window.name 的跨域的机制是：
+
+>name 值在不同的页面（甚至不同域名）加载后依旧存在，并且可以支持非常长的 name 值（2MB）。
+
+比如在 a 页面设置了 window.name 的值，如果 a 跳转到 b 页面，该 name 值仍旧存在，所以思路也就出来了……
+
+看我的代码，[点击](https://github.com/jiangyuan/playjs/tree/master/crossdomain/name)：
+
+3000.html 是发起请求的页面，希望获取 3001.html 上的数据，那么——
+
+1. 3000.html 中放一个 iframe ，执行 3001.html ，并监听 iframe 的 load 事件。
+
+2. 3001.html 操作自己的 window.name ，以此传送数据。
+
+3. 3000.html 当然不能直接访问 3001.html ，所有 3000proxy.html 就有存在的必要。
+    3001.html 第一次加载完成，跳转到 3000proxy，此时 window.name 仍旧存在，两页面同域也可互相访问，
+    跨域获取数据完成。
+
+
+就是那么简单，这个方法可以说是 loacation.hash 的升级版。
+个人觉得，这个方法可以非常好地解决 javascript 跨域问题，推荐使用。
+
+
+
 
 

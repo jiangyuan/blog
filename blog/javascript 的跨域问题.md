@@ -203,9 +203,9 @@ parent.parent.location.hash = location.hash.substring(1);
 
 ## window.name 跨域
 
-上面的 location.hash 确实问题很多，数据暴露、数据容量小等等，老实说，如果能解决问题，还是不错的。
+上面的 location.hash 确实问题很多，数据暴露、数据容量小等等，老实说，如果能解决这些问题，还是不错的。
 
-庆幸的是，就有那么一种方法能有达到上述效果，那就是利用 window.name 。
+庆幸的是，有一种方法能有达到上述效果，那就是利用 window.name 。
 
 这篇文章写得很清楚，[使用 window.name 解决跨域问题](http://www.planabc.net/2008/09/01/window_name_transport/)。
 
@@ -221,16 +221,18 @@ window.name 的跨域的机制是：
 
 3000.html 是发起请求的页面，希望获取 3001.html 上的数据，那么——
 
-1. 3000.html 中放一个 iframe ，执行 3001.html ，并监听 iframe 的 load 事件。
+1. 3000.html 中放一个 iframe ，指向 3001.html ，并监听 iframe 的 load 事件。
 
 2. 3001.html 操作自己的 window.name ，以此传送数据。
 
 3. 3000.html 当然不能直接访问 3001.html ，所有 3000proxy.html 就有存在的必要。
-    3001.html 第一次加载完成，跳转到 3000proxy，此时 window.name 仍旧存在，两页面同域也可互相访问，
+
+    3001.html 第一次加载完成后，使 iframe 跳转到 3000proxy，此时 window.name 仍旧存在，并且 iframe 和其父页面同域，可互相访问，
     跨域获取数据完成。
 
 
 就是那么简单，这个方法可以说是 loacation.hash 的升级版。
+
 个人觉得，这个方法可以非常好地解决 javascript 跨域问题，推荐使用。
 
 

@@ -1,5 +1,14 @@
 # git 常用命令
 
+
+## 日常积累
+
+
+提交前，查看改动的文件名称，[详细](http://stackoverflow.com/questions/1552340/git-show-all-changed-files-between-two-commits)
+
+    `git diff --name-only` 或者  `git diff --name-status`
+
+
 ## 远程仓库相关
 
 ```

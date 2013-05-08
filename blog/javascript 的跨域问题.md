@@ -236,6 +236,70 @@ window.name 的跨域的机制是：
 个人觉得，这个方法可以非常好地解决 javascript 跨域问题，推荐使用。
 
 
+## HTML5 postMessage
+
+html5 的 postMessage ，可以在不同的 window 之间、甚至在不同域的 window 之间传递数据。
+现阶段唯一的问题是浏览器的兼容问题， postMessage 支持 IE8+ 和其他现代浏览器。
+
+可以参照这个[例子](https://github.com/jiangyuan/playjs/tree/master/crossdomain/name)。
+
+postMessage 的使用语法：
+
+```js
+window.postMessage( data, targetOrigin)
+
+// window 是目标 window 对象，可以为 iframe 的 contentWindow，或者 window.open 的返回值……
+// data 是要传递的数据，字符串类型，可以将复杂的类型序列化为字符串传送
+// targetOrigin 是目标域，假如设为 `http://a.com` 那么 `http://b.com` 就不会收到传送的数据
+```
+
+知道用法，那么思路就很清楚了——
+
+3000 端口下的页面 `postMessage.html` 需要从 3001 端口下的 `postMessageTarget.html` 获取数据：
+
+postMessage.html 代码：
+
+```html
+<!-- 这个文件运行在端口 3000 下 -->
+<!-- 向端口 3001 传递参数，以期获得数据 -->
+<iframe src="http://localhost:3001/crossdomain/postMessage/postMessageTarget.html" frameborder="0"></iframe>
+<script type="text/javascript">
+    var ifr = document.getElementsByTagName( "iframe" )[0];
+    ifr.addEventListener( "load", function() {
+        // 传送参数
+        ifr.contentWindow.postMessage( "post data", "*" );        
+    }, false );
+
+    // 获取返回的数据
+    window.addEventListener( "message", function(e) {
+        console.log( "the response data is: " + e.data );
+    });
+</script>
+```
+
+postMessageTarget.html 代码：
+
+```html
+<script type="text/javascript">
+    // 此页面运行在 3001 端口下
+
+    // 依据传入的 message 返回响应的数据
+    window.addEventListener( "message", function(e) {
+        //console.log( "the post data is: " + e.data );
+        if ( e.data ) {
+            e.source.postMessage( "response data", "*" );
+        }
+    }, false);
+</script>
+```
+
+整个过程很清楚，完全没有多余的步骤。
+
+唉，跨域问题在 html5 的面前就是如此简单。
+
+
+
+
 
 
 

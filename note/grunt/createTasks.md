@@ -3,7 +3,7 @@
 [原文](http://gruntjs.com/creating-tasks)
 
 
-* 任务 * 是 grunt 的重要概念。每次运行 grunt ，你都会指定一个或者多个任务让 grunt 执行。
+** 任务 ** 是 grunt 的重要概念。每次运行 grunt ，都应该指定一个或者多个任务让 grunt 执行。
 
 ## 别名任务 ( alias tasks )
 
@@ -54,13 +54,13 @@ grunt.registerMultiTask('log', 'Log stuff.', function() {
 
 当命令行调用 `grunt log` 时， grunt 会遍历 task 底下的 target ，这就是 Multi Task 的本质。
 
-执行一个 Multi Task ， grunt 会现在配置项中寻找和任务名（上面的 log）同名的属性，
+执行一个 Multi Task ， grunt 会在当前配置项中寻找和任务名（比如上面的 log）同名的属性，
 这些属性以及其对应的值都会被传入到任务的处理函数中。
 
 
 ## "Basic" Tasks （普通任务）
 
-普通任务不会想 MultiTask 一样去嗅探配置项，它就只是执行任务的处理函数。可以通过如下方式传递参数：
+普通任务不会像 MultiTask 一样去嗅探配置项，它就只是执行任务的处理函数。可以通过如下方式传递参数：
 
 ```
 // 任务名后加冒号，之后就是参数

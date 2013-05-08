@@ -11,61 +11,83 @@
 类似 Compact Format 和 Files Array 支持一些额外的属性。
 
 ### compact format
-每个 target  只有一个的 src 和 dest 属性，比较适合只读任务，比如 jshint 。
 
-    grunt.initConfig({
-      jshint: {
-        foo: {
-          src: ['src/aa.js', 'src/aaa.js']
+可以翻译为“一般格式”。
+
+该格式结构清晰，一目了然，是最最普通的格式。
+
+每个 target 只有一个的 src 和 dest 属性，比较适合只读任务，比如 jshint 。
+
+```js
+grunt.initConfig({
+    jshint: {                 // task
+        foo: {                // target
+            src: ['src/aa.js', 'src/aaa.js']  // src 是要获取的文件的路径，数组
         },
-      },
-      concat: {
+    },
+    concat: {
         bar: {
-          src: ['src/bb.js', 'src/bbb.js'],
-          dest: 'dest/b.js',
-        },
-      },
-    });
+            src: ['src/bb.js', 'src/bbb.js'],
+            dest: 'dest/b.js',    // dest 是任务执行完成后，所得文件存放的路径
+        }
+    }
+});
+```
 
 ### files object format
-每个 target 可以有多个 src 和 dest，属性名是表示 dest ，对应的值表示 src ，src 非得是数组？拥有任意个 src 和 dest 的同时，一些额外的属性就用不了了。
 
-    grunt.initConfig({
-      concat: {
-        foo: {
-          files: {
-            'dest/a.js': ['src/aa.js', 'src/aaa.js'],
-            'dest/a1.js': ['src/aa1.js', 'src/aaa1.js'],
-          },
+直译是“文件对象格式”。
+
+每个 target 可以有多个 src 和 des 。
+
+属性名是表示 dest ，对应的值表示 src 。
+
+拥有任意个 src 和 dest 的同时，一些 **额外的属性** 就用不了了。
+虽说如此，这种格式还是很受欢迎的 **额外的属性** 用到的机会不多。
+
+```js
+grunt.initConfig({
+    concat: {         // task
+        foo: {        // target 
+            files: {  // 经试验，这一层的属性名必须是 "files"
+                'dest/a.js': ['src/aa.js', 'src/aaa.js'],
+                'dest/a1.js': ['src/aa1.js', 'src/aaa1.js'],
+            },
         },
         bar: {
-          files: {
-            'dest/b.js': ['src/bb.js', 'src/bbb.js'],
-            'dest/b1.js': ['src/bb1.js', 'src/bbb1.js'],
-          },
+            files: {
+                'dest/b.js': ['src/bb.js', 'src/bbb.js'],
+                'dest/b1.js': ['src/bb1.js', 'src/bbb1.js'],
+            },
         },
-      },
-    });
+    }
+});
+```
 
 ### files array format
-这种格式可以有多个 src 和 dest ，但是也能使用额外的配置属性，集合了上两种 format 的优点。
 
-    grunt.initConfig({
-      concat: {
-        foo: {
-          files: [
-            {src: ['src/aa.js', 'src/aaa.js'], dest: 'dest/a.js'},
-            {src: ['src/aa1.js', 'src/aaa1.js'], dest: 'dest/a1.js'},
-          ],
+直译就是“文件数组格式”。
+
+这种格式的每一个 target 可以有多个 src 和 dest ，但是也能使用额外的配置属性，集合了上两种 format 的优点。
+
+```js
+grunt.initConfig({
+    concat: {         // task
+        foo: {        // target
+            files: [  // 左边的 files ，必须是为 "files"，不能设置为其他属性
+                { src: ['src/aa.js', 'src/aaa.js'], dest: 'dest/a.js' },
+                { src: ['src/aa1.js', 'src/aaa1.js'], dest: 'dest/a1.js' },
+            ]
         },
         bar: {
-          files: [
-            {src: ['src/bb.js', 'src/bbb.js'], dest: 'dest/b/', nonull: true},// 这里用到了 nonull
-            {src: ['src/bb1.js', 'src/bbb1.js'], dest: 'dest/b1/', filter: 'isFile'},//filter
-          ],
-        },
-      },
-    });
+            files: [
+                { src: ['src/bb.js', 'src/bbb.js'], dest: 'dest/b/', nonull: true },      // 这里用到了 nonull
+                { src: ['src/bb1.js', 'src/bbb1.js'], dest: 'dest/b1/', filter: 'isFile' },//filter
+            ],
+        }
+    }
+});
+```
 
 ### additional properties
 上面提到了，在 compact format 和 files array formt 中可以使用额外的额外的配置属性，如下：
@@ -73,20 +95,34 @@
 + filter：
     可以是 [fs.Stats](http://nodejs.org/docs/latest/api/fs.html#fs_class_fs_stats) 的方法名，
     也可以是一个函数，用来过滤 src 中的 filepath 。
+    函数带有一个参数，表示当前路径，返回 true 时，当前路径加入结果集。
 
 + nonull：
-    （这个的翻译有待进一步的加深理解。）
-    如果没有匹配(match)到结果（寻找文件的过程），返回一个列表包含通配符自身。
-    如果没有通配符(matches)则返回空的列表。
-    配合 grunt 的 `--verbose` ，这个属性对调式来说很有用。
+
+    布尔值，默认 false 时，设为 true 时有如下行为：
+
+    如果没有匹配(match)到结果（寻找文件的过程），返回一个数组，包含“通配符字符串”。
+
+    为 false 时，遇到上述情况返回空数组。
+
+    配合 grunt 命令行参数的 `--verbose` 使用，这个属性有利于调式。
 
 + dot
-    如果 path 含有 `/` ，只匹配最后段不含斜线的部分。
-    允许 patterns 匹配“以xx开始”的文件名，即使 patterns 本身没有明确这个“以xx开始”中的 xx 。
+    
+    直译是这样：允许 patterns 匹配“以xx开始”的文件名，即使 patterns 本身没有明确这个“以xx开始”中的 xx 。
+
+    我做在研究的时候，发现达不到上述效果，所以上面的理解是错误的。
+
+    官网文档，还能在简洁一点不。
 
 
 + matchBase
-    如果设置， `a?b` 可以匹配 `/xyz/123/acb` ，但是不能匹配 `/xyz/acb/123` 。
+    
+    如果 patterns(通配符)不包含斜杠（/），那么该值设为真时——
+
+    比如， `a?b` 可以匹配 `/xyz/123/acb` ，但是不能匹配 `/xyz/acb/123` 。
+
+    这个属性会匹配所有路径末端（再没有斜杠了）为 `a?b` 的路径。
 
 
 + expand
@@ -159,11 +195,11 @@
           // 这里能动态的构建 src-dest 体系，从而达到和上面一样的效果，而且文件的删除和添加完全不影响 Gruntfile.js
           files: [
             {
-              expand: true,     // Enable dynamic expansion.
-              cwd: 'lib/',      // Src matches are relative to this path.
-              src: ['**/*.js'], // Actual pattern(s) to match.
-              dest: 'build/',   // Destination path prefix.
-              ext: '.min.js',   // Dest filepaths will have this extension.
+              expand: true,     // 启动动态匹配
+              cwd: 'lib/',      // 'src' 的路径都是相对该值所表示的路径
+              src: ['**/*.js'], // 通配符
+              dest: 'build/',   // 目标路径
+              ext: '.min.js',   // 目标路径会在末尾加上该值
             },
           ],
         },

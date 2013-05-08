@@ -93,13 +93,16 @@ grunt.initConfig({
 上面提到了，在 compact format 和 files array formt 中可以使用额外的额外的配置属性，如下：
 
 + filter：
+
     可以是 [fs.Stats](http://nodejs.org/docs/latest/api/fs.html#fs_class_fs_stats) 的方法名，
+    
     也可以是一个函数，用来过滤 src 中的 filepath 。
+    
     函数带有一个参数，表示当前路径，返回 true 时，当前路径加入结果集。
 
 + nonull：
 
-    布尔值，默认 false 时，设为 true 时有如下行为：
+    布尔值，默认 false ，设为 true 时有如下行为：
 
     如果没有匹配(match)到结果（寻找文件的过程），返回一个数组，包含“通配符字符串”。
 
@@ -113,7 +116,7 @@ grunt.initConfig({
 
     我做在研究的时候，发现达不到上述效果，所以上面的理解是错误的。
 
-    官网文档，还能在简洁一点不。
+    官网文档，还能再简洁一点不！
 
 
 + matchBase
@@ -126,10 +129,12 @@ grunt.initConfig({
 
 
 + expand
-    动态生成 src-dest 键值对。详细请查看下方“动态地构建文件系统”。
+
+    动态生成 src-dest 键值对。详细请查看下方 **动态地构建文件系统** 。
 
 ### 通配模式 (globbing patterns)
-一个一个地去所有文件的路径显然不太现实，grunt 可以通过内置的 [node-glob](https://github.com/isaacs/node-glob) 和 [minimatch](https://github.com/isaacs/minimatch) 来方便地抓取文件路径。
+
+一个一个地去穷举所有文件的路径显然不太现实，grunt 可以通过内置的 [node-glob](https://github.com/isaacs/node-glob) 和 [minimatch](https://github.com/isaacs/minimatch) 来方便地抓取文件路径。
 
 下面所要讲述的并不是一个关于 globbing patterns 的全面教程，只是在路径(path)经常遇到：
 + \*  匹配除 "/" 之外的所有字符
@@ -138,32 +143,34 @@ grunt.initConfig({
 + {}  里面是逗号分割的两个数字，表示 "或"
 + !   通配符的开始如果是 "!" ，表示不匹配
 
-    // 指定单个文件
-    {src: 'foo/this.js', dest: ...}
-    // 单个文件组成的数组
-    {src: ['foo/this.js', 'foo/that.js', 'foo/the-other.js'], dest: ...}
-    // 这个和上面的数组效果一样
-    {src: 'foo/th*.js', dest: ...}
+```js
+        // 指定单个文件
+        {src: 'foo/this.js', dest: ...}
+        // 单个文件组成的数组
+        {src: ['foo/this.js', 'foo/that.js', 'foo/the-other.js'], dest: ...}
+        // 这个和上面的数组效果一样
+        {src: 'foo/th*.js', dest: ...}
 
-    // "{}" 通配符的用法
-    {src: 'foo/{a,b}*.js', dest: ...}
-    // 上面的通配其实就是这个
-    {src: ['foo/a*.js', 'foo/b*.js'], dest: ...}
+        // "{}" 通配符的用法
+        {src: 'foo/{a,b}*.js', dest: ...}
+        // 上面的通配其实就是这个
+        {src: ['foo/a*.js', 'foo/b*.js'], dest: ...}
 
-    // foo/ 路径下的所有 .js 文件
-    {src: ['foo/*.js'], dest: ...}
-    // 这个, bar..js 是第一个，紧随其后的是其他的 .js 文件
-    {src: ['foo/bar.js', 'foo/*.js'], dest: ...}
+        // foo/ 路径下的所有 .js 文件
+        {src: ['foo/*.js'], dest: ...}
+        // 这个, bar..js 是第一个，紧随其后的是其他的 .js 文件
+        {src: ['foo/bar.js', 'foo/*.js'], dest: ...}
 
-    // 除了 bar.js 之外的所有 .js 
-    {src: ['foo/*.js', '!foo/bar.js'], dest: ...}
-    // 将 bar.js 放在数组的最末尾
-    {src: ['foo/*.js', '!foo/bar.js', 'foo/bar.js'], dest: ...}
+        // 除了 bar.js 之外的所有 .js 
+        {src: ['foo/*.js', '!foo/bar.js'], dest: ...}
+        // 将 bar.js 放在数组的最末尾
+        {src: ['foo/*.js', '!foo/bar.js', 'foo/bar.js'], dest: ...}
 
-    // 模版可以用在路径和通配符中
-    {src: ['src/<%= basename %>.js'], dest: 'build/<%= basename %>.min.js'}
-    // 这样仍旧可以找到在 config 中定义的所有文件
-    {src: ['foo/*.js', '<%= jshint.all.src %>'], dest: ...}
+        // 模版可以用在路径和通配符中
+        {src: ['src/<%= basename %>.js'], dest: 'build/<%= basename %>.min.js'}
+        // 这样仍旧可以找到在 config 中定义的所有文件
+        {src: ['foo/*.js', '<%= jshint.all.src %>'], dest: ...}
+```
 
 更多的通配符( glob pattern ) 可以参见 [node-glob](https://github.com/isaacs/node-glob) 和 [minimatch](https://github.com/isaacs/minimatch) 的文档。
 

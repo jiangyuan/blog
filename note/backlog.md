@@ -10,6 +10,10 @@
 
 * nodejs
 
+* jquery queue 
+
+* jquery animated
+
 * jQuery callback 和 jQuery deferred
 
 * jQuery ajax 源码分析
@@ -21,4 +25,6 @@
 * mongoDB
 
 * [minify](https://code.google.com/p/minify/)
+
+* gzip
 

@@ -28,3 +28,11 @@
 
 * gzip
 
+* seajs
+
+* less
+
+* [koala](http://koala-app.com/)
+
+* [bower](http://bower.io/)
+

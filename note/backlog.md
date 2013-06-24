@@ -28,7 +28,7 @@
 
 * gzip
 
-* seajs
+* **seajs** and **jQuery.animate**
 
 * less
 

@@ -47,4 +47,4 @@
 
 * Mutation observation
 
-* 
+* Scope destruction

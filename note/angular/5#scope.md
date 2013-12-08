@@ -34,7 +34,6 @@
 * scope can propagate events in similar fashion to DOM events
 * broadcasted to the scope child and emitted to scope parents
 
-
 ## scope life cycle
 
 * `$apply`, `$watch`, `$digest`

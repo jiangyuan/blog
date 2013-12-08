@@ -46,13 +46,13 @@
 
 [Tips For Creating Sublime Text Color Schemes](http://www.jisaacks.com/tips-for-creating-sublime-color-schemes)
 
-解决了我。其中的 `tip1` 尤其好——
+解决了我的问题。其中的 `tip1` 尤其好——
 
 > Sublime text color schemes work by defining colors for scopes. A syntax definition matches the different parts of the file's text (e.g. functions, classes, keywords, etc.) and maps them to a named scope. Then the color scheme specifies what colors to use for what scopes. 
 > The hard part comes when you see a particular piece of syntax you want to style a specific way, but you do not know what scope it is. I did a lot of guess work until I discovered the ScopeHunter plugin. 
 > The ScopeHunter plugin allows you to select some text and it tells you what scope it matches. This removes the guess work and allows you to quickly color the pieces you want to. 
 
-sublime text 的 color schmems 是通过 `scopes` 来定义 `color` 的，我们可以安装插件 `ScopeHunter` 来查看光标出的 `scopes` ，从而可以自定义颜色。
+sublime text 的 color scheme 是通过 `scopes` 来定义 `color` 的，我们可以安装插件 `ScopeHunter` 来查看光标出的 `scopes` ，从而可以自定义颜色。
 
 ```xml
 <dict>

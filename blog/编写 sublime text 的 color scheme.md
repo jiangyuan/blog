@@ -99,6 +99,11 @@ sublime text 的 color scheme 是通过 `scopes` 来定义 `color` 的，我们�
 
 Perfect!
 
+
+参考：
+
+[http://stackoverflow.com/questions/10636410/modifying-sublime-text-2-for-js](http://stackoverflow.com/questions/10636410/modifying-sublime-text-2-for-js)
+
 附上我的 `color scheme` `Obsidian.tmTheme` ：
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

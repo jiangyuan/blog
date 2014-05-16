@@ -21,3 +21,8 @@ angular frees you from the following pains:
 * manipulating html dom programmatically
 * marshaling data to and from the ui
 * writing tons of intialization code to just get start
+
+
+
+
+

@@ -2,7 +2,10 @@
 
 ## what is a module?
 
-Most applications have a main method which instantiates, wires, and bootstraps the application. Angular apps don't have a main method. **Instead modules declaratively specify how an application should be bootstrapped.** There are several advantages to this approach:
+Most applications have a main method which instantiates, wires, and bootstraps the application.
+Angular apps don't have a main method.
+**Instead modules declaratively specify how an application should be bootstrapped.**
+There are several advantages to this approach:
 
 * the process is more declarative whice is easier to understand
 * In unit-testing there is no need to load all modules, which may aid in writing unit-tests.
@@ -19,7 +22,8 @@ Most applications have a main method which instantiates, wires, and bootstraps t
 
 ## Module Loading & Dependencies
 
- A module is a collection of configuration and run blocks. In its simplest form the module consist of collection of two kinds of blocks:
+ A module is a collection of configuration and run blocks.
+ In its simplest form the module consist of collection of two kinds of blocks:
 
  ```js
  angular.module('myModule', []).

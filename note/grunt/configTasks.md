@@ -1,55 +1,55 @@
-# Configuring tasks#
+# 配置任务(Configuring tasks)
 
 [原文](http://gruntjs.com/configuring-tasks)
 
 
-## Files   
-大部分 task 都表现为操作文件，grunt 有着强有力的文件操作方法。
+## 文件(Files)   
+大部分 任务(task) 都表现为操作文件，grunt 有着强有力的文件操作方法。
+操作文件有两个基本要点，**操作什么文件（src）**和**文件操作完成后放哪（dest）**。
     
-有好多种方法来定义 src-dest( source-destination ) 的映射。
-每一种“文件格式”都支持 src 和 dest，但是，但是：
-类似 Compact Format 和 Files Array 支持一些额外的属性。
+grunt 有三种种方法来定义 src-dest(source-destination) 的映射，如下
 
-### compact format
+* 一般格式（compact format）
+* 文件对象格式（files object format）
+* 文件数组格式（files array format）
 
-可以翻译为“一般格式”。
+
+### 一般格式（compact format）
 
 该格式结构清晰，一目了然，是最最普通的格式。
 
-每个 target 只有一个的 src 和 dest 属性，比较适合只读任务，比如 jshint 。
+每个 target 只有**一个**的 src 和 dest 属性，比较适合只读任务，比如 jshint 。
 
 ```js
 grunt.initConfig({
     jshint: {                 // task
         foo: {                // target
-            src: ['src/aa.js', 'src/aaa.js']  // src 是要获取的文件的路径，数组
+            src: [ "src/aa.js", "src/aaa.js" ]  // src 是要获取的文件的路径，字符串或数组
         },
     },
     concat: {
         bar: {
-            src: ['src/bb.js', 'src/bbb.js'],
-            dest: 'dest/b.js',    // dest 是任务执行完成后，所得文件存放的路径
+            src: [ "src/bb.js", "src/bbb.js" ],
+            dest: "dest/b.js",    // dest 是任务执行完成后，所得文件存放的路径
         }
     }
 });
 ```
 
-### files object format
+### 文件对象格式（files object format）
 
-直译是“文件对象格式”。
-
-每个 target 可以有多个 src 和 des 。
+每个 target 可以有**多个** src 和 des 。
 
 属性名是表示 dest ，对应的值表示 src 。
 
-拥有任意个 src 和 dest 的同时，一些 **额外的属性** 就用不了了。
-虽说如此，这种格式还是很受欢迎的 **额外的属性** 用到的机会不多。
+拥有任意个 src 和 dest 的同时，一些 [附加的属性](#add) 就用不了了。
+虽说如此，这种格式还是很受欢迎的。
 
 ```js
 grunt.initConfig({
     concat: {         // task
         foo: {        // target 
-            files: {  // 经试验，这一层的属性名必须是 "files"
+            files: {  // 注意：这一层的属性名必须是 "files"，所谓的 files object format 嘛
                 'dest/a.js': ['src/aa.js', 'src/aaa.js'],
                 'dest/a1.js': ['src/aa1.js', 'src/aaa1.js'],
             },
@@ -64,17 +64,15 @@ grunt.initConfig({
 });
 ```
 
-### files array format
+### 文件数组格式（files array format）
 
-直译就是“文件数组格式”。
-
-这种格式的每一个 target 可以有多个 src 和 dest ，但是也能使用额外的配置属性，集合了上两种 format 的优点。
+这种格式的每一个 target 可以有**多个** src 和 dest ，但是也能使用 [附加的配置属性](#add)，集合了上两种 format 的优点。
 
 ```js
 grunt.initConfig({
     concat: {         // task
         foo: {        // target
-            files: [  // 左边的 files ，必须是为 "files"，不能设置为其他属性
+            files: [  // 注意：这一层的属性名必须是 "files"，所谓的 files array format 嘛
                 { src: ['src/aa.js', 'src/aaa.js'], dest: 'dest/a.js' },
                 { src: ['src/aa1.js', 'src/aaa1.js'], dest: 'dest/a1.js' },
             ]
@@ -89,8 +87,8 @@ grunt.initConfig({
 });
 ```
 
-### additional properties
-上面提到了，在 compact format 和 files array formt 中可以使用额外的额外的配置属性，如下：
+<h3 id="add"> 附加属性（additional properties）</h3>
+上面提到了，在 compact format 和 files array formt 中可以使用附加的配置属性，如下：
 
 + filter：
 
@@ -112,27 +110,20 @@ grunt.initConfig({
 
 + dot
     
-    直译是这样：允许 patterns 匹配“以xx开始”的文件名，即使 patterns 本身没有明确这个“以xx开始”中的 xx 。
-
-    我做在研究的时候，发现达不到上述效果，所以上面的理解是错误的。
-
-    官网文档，还能再简洁一点不！
+    允许 patterns 匹配 "."  开始的文件名，即使 patterns 本身没有明确的匹配 "." 。
 
 
 + matchBase
     
-    如果 patterns(通配符)不包含斜杠（/），那么该值设为真时——
+    不包含斜杠（/）的 patterns ，只匹配路径尾端没有斜杠的部分。
 
-    比如， `a?b` 可以匹配 `/xyz/123/acb` ，但是不能匹配 `/xyz/acb/123` 。
+    比如如果该值为 true ， `a?b` 可以匹配 `/xyz/123/acb` ，但是不能匹配 `/xyz/acb/123` 。
 
-    这个属性会匹配所有路径末端（再没有斜杠了）为 `a?b` 的路径。
-
-    比如，该值为 true ， `*.js` 的行为就和 `**/*.js` 一样。
 
 
 + expand
 
-    动态生成 src-dest 键值对。详细请查看下方 **动态地构建文件系统** 。
+    动态生成 src-dest 键值对。详细请查看下方 [动态地构建文件系统](#d) 。
 
 ### 通配模式 (globbing patterns)
 
@@ -176,15 +167,15 @@ grunt.initConfig({
 
 更多的通配符( glob pattern ) 可以参见 [node-glob](https://github.com/isaacs/node-glob) 和 [minimatch](https://github.com/isaacs/minimatch) 的文档。
 
-### 动态地构建文件系统 ( building the files object dynamically )
+<h3 id="d"> 动态地构建文件系统 ( building the files object dynamically )</h3>
 
 当你想要组织很多个毫无关联的文件的时候，一些额外的属性可以让你动态地抓取这些文件。当然，这些属性必须得在 "compact" 和 "files array" 中使用。
 + expand 设置为 true 时表示启如下属性有效：
 + cwd 所有关于 src 的匹配都是相对这个路径，但不包含这个路径
 + src 通配符，路径相对于 cwd
 + dest 目标路径前缀
-+ ext dest 路径中所有文件的扩展名将被此值替代
-+ flatten Remove all path parts from generated dest paths. ( 待试用 )
++ ext 目标路径中所有文件的扩展名将被此值替代
++ flatten 去除目标路径中的所有路径部分，只剩 dest 的值加上文件名
 + rename 函数，每次匹配 src 都会调用一次， dest 和 src 被传入，返回一个字符串表示新的 dest 。
 
 还是看下面的例子比较实在，下面的“静态”和“动态”的结果相同：
@@ -214,3 +205,4 @@ grunt.initConfig({
         },
       },
     });
+

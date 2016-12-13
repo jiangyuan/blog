@@ -1,4 +1,8 @@
-# javascript 的跨域问题
+<!--
+title: javascript 的跨域问题
+date: 2013-05-15 23:21:54
+tags: 跨域,jsonp
+-->
 
 最近有不少人问到了我跨域问题，也有不少问题是因为跨域引起的，加上我本人对跨域的方法和每种方法背后的机制都不胜了解，
 所以就有做个笔记的必要了。
@@ -20,6 +24,8 @@
 * ajax2 中的跨域资源共享 (CORS: cross-orgin resource sharing)
 
 * flash
+
+<!-- more -->
 
 ## document.domain
 
@@ -81,7 +87,7 @@ script 标签加载完成就会执行其中的代码，因此其内容必须合�
 }
 ```
 
-代码肯定要跪掉，因此必须这样： 
+代码肯定要跪掉，因此必须这样：
 
 ```js
 callback({
@@ -129,9 +135,9 @@ window.onhashchange
 
 上面的需求可以概括为， a.com 下的 a.html 想跨域获取 b.com 下的 b.html 页面上的数据。
 
-大体思路： 
+大体思路：
 
-a.html 中创建 iframe 指向 b.html 并利用 hash 传递数据 
+a.html 中创建 iframe 指向 b.html 并利用 hash 传递数据
 
 b.html 拿到参数，修改 a.html 页面的 hash 来传递数据
 
@@ -142,7 +148,7 @@ a.html 通过 onhashchange 事件监听自身的 hash 变化，获取数据
 首先在 a.html 页面中创建一个 iframe ，并指向 b.html ，代码如下：
 
 ```
-// 请求 b.html 
+// 请求 b.html
 function request() {
     var iframe = document.createElement( "iframe" )
     iframe.style.display = "none";
@@ -188,7 +194,7 @@ function callBack(){
 现在知道我为什么说这种方法蛋痛了吧，第三个页面 (a.com 下的 a2.html) 出现了，其中代码
 
 ```js
-// parent.parent 就是 a.html 
+// parent.parent 就是 a.html
 // 因为parent.parent和自身属于同一个域，所以可以改变其location.hash的值
 parent.parent.location.hash = location.hash.substring(1);
 ```
@@ -267,7 +273,7 @@ postMessage.html 代码：
     var ifr = document.getElementsByTagName( "iframe" )[0];
     ifr.addEventListener( "load", function() {
         // 传送参数
-        ifr.contentWindow.postMessage( "post data", "*" );        
+        ifr.contentWindow.postMessage( "post data", "*" );
     }, false );
 
     // 获取返回的数据
@@ -296,10 +302,3 @@ postMessageTarget.html 代码：
 整个过程很清楚，完全没有多余的步骤。
 
 唉，跨域问题在 html5 的面前就是如此简单。
-
-
-
-
-
-
-

@@ -1,3 +1,9 @@
+<!--
+title: 也谈 setTimeout
+date: 2014-06-28
+tags: js
+-->
+
 # 也谈 setTimeout
 
 setTimeout ，延迟一段事件执行代码，当然这是最基本的用法，这里不说基本用法。
@@ -126,7 +132,7 @@ setTimeout(function(){
 setInterval(function(){
     /* Some long block of code... */
 }, 10);
-``` 
+```
 
 乍一看，效果一样，其实区别很大。
 
@@ -160,7 +166,7 @@ var o = {
     a: "a",
     b: function() {
         setTimeout(function() {
-            console.log( this.a ); 
+            console.log( this.a );
         }, 1000);
     }
 }
@@ -178,7 +184,7 @@ var o = {
     b: function() {
         var that = this;
         setTimeout(function() {
-            console.log( that.a ); 
+            console.log( that.a );
         }, 1000);
     }
 }

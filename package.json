@@ -4,7 +4,8 @@
   "description": "博客",
   "dependencies": {
     "express": "^4.14.0",
-    "fs-extra": "^1.0.0"
+    "fs-extra": "^1.0.0",
+    "tracer": "^0.8.7"
   },
   "devDependencies": {
     "@types/fs-extra": "0.0.35"

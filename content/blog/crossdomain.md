@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: javascript 的跨域问题
 date: 2013-05-15 23:21:54
 tags: 跨域,jsonp

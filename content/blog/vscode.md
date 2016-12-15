@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: VS Code 初上手
 date: 2016-09-24 22:59:22
 tags: 编辑器,vscode

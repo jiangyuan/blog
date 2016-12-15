@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: bash 初探
 date: 2015-12-31 23:21:54
 tags: bash, shell, mac

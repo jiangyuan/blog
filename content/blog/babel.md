@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: babel
 date: 2016-08-13 16:19:54
 tags: babel, es6, fis

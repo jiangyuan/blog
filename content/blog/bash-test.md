@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: bash 的 Test
 date: 2016-05-30 21:38:54
 tags: bash, shell, mac

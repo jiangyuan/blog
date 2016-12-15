@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: bash 的变量和参数
 date: 2016-01-27 15:15:54
 tags: bash, shell, mac

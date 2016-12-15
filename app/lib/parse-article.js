@@ -5,6 +5,7 @@
 'use strict';
 
 const fs = require('fs-extra');
+const parseArticleMeta = require('./parse-article-meta');
 
 function readMd(path) {
   return new Promise((resolve, reject) => {
@@ -29,7 +30,6 @@ function getContent(mdList) {
     files.push(readMd(filePath));
   });
 
-  console.log(files);
 
   return Promise.all(files);
 }
@@ -40,7 +40,8 @@ function parseArticle(config) {
 
   return getContent(meta.mdList)
     .then((ret) => {
-      console.log(ret);
+      const r = parseArticleMeta(ret[0]);
+      console.log(r);
     })
     .catch((err) => {
       console.log(err);

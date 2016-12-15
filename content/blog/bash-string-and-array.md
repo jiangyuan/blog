@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: bash 的字符串和数组
 date: 2016-03-29 15:15:54
 tags: bash, shell, mac

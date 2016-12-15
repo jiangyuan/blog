@@ -11,7 +11,7 @@ const parseArticle = require('./parse-article');
 
 function parseMdList(c) {
   return fs.readdirSync(c.source).filter((item) => {
-    return /^[^.].+\.md$/.test(item); // 过滤掉 . 开头的文件
+    return /^[^.].+\.md$/.test(item); // .md 结尾并且不是 . 开头的文件
   }).map((item) => {
     return path.join(c.source, item);
   });
@@ -22,14 +22,14 @@ function parse(config) {
   config = config || conf;
   let meta = config.meta = {};
   meta.mdList = parseMdList(config);
-  console.log(config);
+
   // const data =
-  parseArticle(config);
+  parseArticle(config).then();
   return {
     index: [],
     article: {}
   }
 }
-
 parse();
+module.exports = parse;
 

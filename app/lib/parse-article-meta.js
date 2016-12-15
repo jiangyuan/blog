@@ -4,28 +4,14 @@
 
 'use strict';
 
-const ex = `
-<!--meta
-title: babel
-date: 2016-08-13 16:19:54
-tags: babel, es6, fis
--->
-
-
-最近总算有点时间能系统的梳理下 \`babel\` 。入门或者使用手册什么的直接查看“<a href="#wafaha">参考文章</a>”即可，我只说说我的理解。
-
-<!-- more -->
-
-## 插件
-`;
 const rMore = /([\s\S]+)<!--\s*more\s*-->([\s\S]+)/;
 const rMeta = /<!--meta([\s\S]+)-->/;
 
 // 文章数据
 // {
 //   title: 'string', // 标题
-//   content: 'string', // 全文
-//   brief: 'string', // 简介， <!-- more -->
+//   content: 'string', // 全文，html 字符串
+//   brief: 'string', // 简介，html 字符串 <!-- more -->
 //   date: 'string', // 发布日期
 //   id: 'string', // 文件名
 //   keywords: 'string', // keywords
@@ -44,7 +30,7 @@ function parseMeta(brief) {
     tags: (v) => {
       return v.split(/,\s*/);
     }
-  }
+  };
   let temp = rMeta.exec(brief) || [];
 
   if (!temp[1]) {
@@ -79,7 +65,5 @@ function parseArticleMeta(md) {
 
   return ret;
 }
-
-// parseArticleMeta(ex);
 
 module.exports = parseArticleMeta;

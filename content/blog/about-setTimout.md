@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: 也谈 setTimeout
 date: 2014-06-28
 tags: js

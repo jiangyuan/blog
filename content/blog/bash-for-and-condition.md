@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: bash 的条件和循环
 date: 2016-06-28 15:15:54
 tags: bash, shell, mac

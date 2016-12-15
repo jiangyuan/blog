@@ -1,4 +1,4 @@
-<!--
+<!--meta
 title: sublime 的 color scheme
 date: 2014-03-18
 tags: 编辑器, sublime

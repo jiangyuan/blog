@@ -24,10 +24,12 @@ function parse(config) {
   meta.mdList = parseMdList(config);
 
   // const data =
-  parseArticle(config).then();
+  parseArticle(config);
   return {
-    index: [],
-    article: {}
+    flags: {
+      'key': [[], []]  // 该标签下所有文章，按时间顺序分页
+    },
+    article: [[], []] // 所有文章，按时间顺序分页
   }
 }
 parse();

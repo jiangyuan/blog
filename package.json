@@ -5,6 +5,8 @@
   "dependencies": {
     "express": "^4.14.0",
     "fs-extra": "^1.0.0",
+    "prismjs": "^1.6.0",
+    "remarkable": "^1.7.1",
     "tracer": "^0.8.7"
   },
   "devDependencies": {

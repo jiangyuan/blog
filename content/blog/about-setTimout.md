@@ -50,7 +50,7 @@ ready: function( wait ) {
     ...
 },
 ```
-
+<!-- more -->
 ## setTimeout( func, 0 )
 
 当然，初见这种用法时，我是一愣啊，什么情况，setTimeout( func, 0 ) 和直接调用 func 难道不是同一个效果？

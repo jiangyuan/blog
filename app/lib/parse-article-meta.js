@@ -4,22 +4,11 @@
 
 'use strict';
 
+// keywords description title md mdBrief date tags
+
 const rMore = /([\s\S]+)<!--\s*more\s*-->([\s\S]+)/;
 const rMeta = /<!--meta([\s\S]+)-->/;
 
-// 文章数据
-// {
-//   title: 'string', // 标题
-//   content: 'string', // 全文，html 字符串
-//   brief: 'string', // 简介，html 字符串 <!-- more -->
-//   date: 'string', // 发布日期
-//   id: 'string', // 文件名
-//   keywords: 'string', // keywords
-//   description: 'string', // description
-//   md: 'string', // md 内容
-//   mdBrief: 'string', // md 简介
-//   tags: [] // array，标签
-// }
 
 function parseMeta(brief) {
   let ret = {};
@@ -58,10 +47,12 @@ function parseMeta(brief) {
 function parseArticleMeta(md) {
   let ret = {};
   const temp = rMore.exec(md) || [];
-  ret.md = md;
-  ret.mdBrief = temp[1] || '';
+  // ret.md = md;
+  let mdBrief = temp[1] || '';
+  Object.assign(ret, parseMeta(mdBrief));
 
-  Object.assign(ret, parseMeta(ret.mdBrief));
+  ret.md = md.replace(rMore, '').replace(rMeta, '');
+  ret.mdBrief = mdBrief.replace(rMore, '').replace(rMeta, '');
 
   return ret;
 }

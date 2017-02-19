@@ -6,10 +6,14 @@
 
 // keywords description title md mdBrief date tags
 
-const rMore = /([\s\S]+)<!--\s*more\s*-->([\s\S]+)/;
+const rMore = /<!--\s*more\s*-->/;
 const rMeta = /<!--meta([\s\S]+)-->/;
 
-
+/**
+ * 处理数据，即 <!--meta--> 中的信息
+ * @param brief
+ * @returns {{}}
+ */
 function parseMeta(brief) {
   let ret = {};
   const resolveHandles = {
@@ -46,9 +50,9 @@ function parseMeta(brief) {
  */
 function parseArticleMeta(md) {
   let ret = {};
-  const temp = rMore.exec(md) || [];
+  const temp = md.split(rMore) || [];
   // ret.md = md;
-  let mdBrief = temp[1] || '';
+  let mdBrief = temp[0] || '';
   Object.assign(ret, parseMeta(mdBrief));
 
   ret.md = md.replace(rMore, '').replace(rMeta, '');

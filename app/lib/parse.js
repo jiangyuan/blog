@@ -20,18 +20,27 @@ function parseMdList(c) {
 
 function parse(config) {
   config = config || conf;
+  let ret = {};
   let meta = config.meta = {};
   meta.mdList = parseMdList(config);
 
   // const data =
-  parseArticle(config);
-  return {
-    flags: {
-      'key': [[], []]  // 该标签下所有文章，按时间顺序分页
-    },
-    article: [[], []] // 所有文章，按时间顺序分页
-  }
+  return parseArticle(config)
+    .then((data) => {
+      ret.rawData = data;
+      // console.log(data);
+      return ret;
+    });
+  // {
+  //   map: {}, // 文章的 key - value
+  //   tags: {
+  //     'key': [[], []]  // 该标签下所有文章，按时间顺序分页
+  //   },
+  //   article: [[], []], // 所有文章，按时间顺序分页
+  //   rawList: [], // 原始数据，按时间顺序排列
+  // }
 }
+
 parse();
 module.exports = parse;
 

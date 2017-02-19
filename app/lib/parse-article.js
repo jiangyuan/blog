@@ -69,7 +69,10 @@ function parseArticle(config) {
         let dataMeta = parseArticleMeta(content);
         Object.assign(dataMeta, parseArticleMd(dataMeta));
         dataMeta.id = getArticleId(meta.mdList[i]);
+        data.push(dataMeta);
       });
+
+      return data;
     })
     .catch((err) => {
       console.log(err);

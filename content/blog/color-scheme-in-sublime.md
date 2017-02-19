@@ -14,6 +14,8 @@ tags: 编辑器, sublime
 这个达到了我的效果，但是将整个的 `color scheme` 都改了，自然不行。
 现在的问题是——
 
+<!-- more -->
+
 ## 在当前的 color scheme 高亮 markdown
 
 继续寻找，然后找了这个

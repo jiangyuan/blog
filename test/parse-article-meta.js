@@ -4,7 +4,6 @@
  * @date 2016-12-15
  */
 
-
 const ex = `
 <!--meta
 title: babel
@@ -18,11 +17,11 @@ tags: babel, es6, fis
 <!-- more -->
 
 ## 插件
-`;
-const parseArticleMeta = require('../app/lib/parse-article-meta');
+`
+const parseArticleMeta = require('../app/lib/parse-article-meta')
 
 describe('parseArticleMeta', () => {
   it('parse', () => {
-    console.log(parseArticleMeta(ex));
-  });
-});
+    console.log(parseArticleMeta(ex))
+  })
+})

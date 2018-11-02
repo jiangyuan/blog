@@ -4,10 +4,10 @@
  * @date 2016-12-15
  */
 
-const parse = require('../app/lib/parse');
+const parse = require('../app/lib/parse')
 
 describe('parseArticleMeta', () => {
   it('parse', () => {
-    console.log(parse());
-  });
-});
+    console.log(parse())
+  })
+})

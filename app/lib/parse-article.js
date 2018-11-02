@@ -2,7 +2,7 @@
  * 读取 md ，处理各种数据形式
  */
 
-'use strict';
+'use strict'
 
 // 文章数据
 // {
@@ -18,47 +18,43 @@
 //   tags: [] // array，标签
 // }
 
+const fs = require('fs-extra')
+const path = require('path')
+const parseArticleMeta = require('./parse-article-meta')
+const parseArticleMd = require('./parse-article-md')
 
-const fs = require('fs-extra');
-const path = require('path');
-const parseArticleMeta = require('./parse-article-meta');
-const parseArticleMd = require('./parse-article-md');
-
-function readMd(path) {
+function readMd (path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf8', (err, content) => {
       if (err) {
-        return reject({
+        return reject(new Error({
           msg: `读取 ${path} 出错`,
           error: err
-        });
+        }))
       }
 
-      resolve(content);
+      resolve(content)
     })
-  });
+  })
 }
 
-function getArticleId(filePath) {
-  return path.basename(filePath).replace(/\.md$/, '');
+function getArticleId (filePath) {
+  return path.basename(filePath).replace(/\.md$/, '')
 }
 
-
-function getContent(mdList) {
-  let files = [];
+function getContent (mdList) {
+  let files = []
 
   mdList.forEach((filePath) => {
-    files.push(readMd(filePath));
-  });
+    files.push(readMd(filePath))
+  })
 
-
-  return Promise.all(files);
+  return Promise.all(files)
 }
 
-
-function parseArticle(config) {
-  const meta = config.meta;
-  let data = config.data = [];
+function parseArticle (config) {
+  const meta = config.meta
+  let data = config.data = []
 
   return getContent(meta.mdList)
     .then((contentList) => {
@@ -66,18 +62,17 @@ function parseArticle(config) {
       // console.log(r, getArticleId(getArticleId(meta.mdList[0])));
 
       contentList.forEach((content, i) => {
-        let dataMeta = parseArticleMeta(content);
-        Object.assign(dataMeta, parseArticleMd(dataMeta));
-        dataMeta.id = getArticleId(meta.mdList[i]);
-        data.push(dataMeta);
-      });
+        let dataMeta = parseArticleMeta(content)
+        Object.assign(dataMeta, parseArticleMd(dataMeta))
+        dataMeta.id = getArticleId(meta.mdList[i])
+        data.push(dataMeta)
+      })
 
-      return data;
+      return data
     })
     .catch((err) => {
-      console.log(err);
-    });
+      console.log(err)
+    })
 }
 
-
-module.exports = parseArticle;
+module.exports = parseArticle

@@ -10,14 +10,24 @@
     "tracer": "^0.8.7"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
     "@types/fs-extra": "0.0.35",
+    "@types/mocha": "^5.2.5",
+    "@types/rewire": "^2.5.28",
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
-    "rewire": "^2.5.2"
+    "rewire": "^2.5.2",
+    "standard": "^12.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "exe": "node app/lib/parse.js"
+  },
+  "standard": {
+    "env": [
+      "mocha",
+      "node"
+    ]
   },
   "repository": {
     "type": "git",

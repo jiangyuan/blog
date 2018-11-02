@@ -4,7 +4,6 @@
  * @date 2016-12-16
  */
 
-
 module.exports = {
   data: {
     md: `
@@ -37,4 +36,4 @@ tags: babel, es6, fis
     tags: ['编辑器', 'vscode'],
     id: 'test_test'
   }
-};
+}

@@ -28,7 +28,13 @@ function getDateOrder (rawList) {
 
 function getArticle (list) {
   let ret = []
+  const len = list.length
   const pageNumber = Math.ceil(list / conf.numPerPage)
+  for (let i = 1; i <= pageNumber; i++) {
+    ret.push(list.slice((len - i * conf.pageNumber) - (len - (i - 1) * conf.pageNumber)))
+  }
+
+  // 最近的一页总是 10-19 之间
 }
 
 function parse (config) {

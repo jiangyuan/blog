@@ -7,6 +7,7 @@ const path = require('path')
 const fs = require('fs-extra')
 const conf = require('../config')
 const parseArticle = require('./parse-article')
+require('./events-on')
 
 function parseMdList (c) {
   return fs.readdirSync(c.source).filter((item) => {
@@ -26,15 +27,30 @@ function getDateOrder (rawList) {
   })
 }
 
+/**
+ * 获取翻页列表
+ * 固化翻页，尽量少的改变缓存
+ * * 常规思路如果一共 3 页，合成 2 页，第一页 1-10， 第二页 11 - 29
+ * * 常规思路如果是 4 页，合成 3 页，第一页 1-10， 第二页 11-20 ，第三页 21-39
+ * @param {*} list
+ */
 function getArticle (list) {
   let ret = []
   const len = list.length
-  const pageNumber = Math.ceil(list / conf.numPerPage)
-  for (let i = 1; i <= pageNumber; i++) {
-    ret.push(list.slice((len - i * conf.pageNumber) - (len - (i - 1) * conf.pageNumber)))
+  const pageNumber = Math.ceil(len / conf.numPerPage)
+  const reverseList = list.reverse()
+  for (let i = 0; i < pageNumber; i++) {
+    ret.push(reverseList.slice((i * conf.pageNumber), (i + 1) * conf.pageNumber))
   }
 
-  // 最近的一页总是 10-19 之间
+  const l = ret.length
+  if (l >= 2) {
+    const temp = ret[l - 2].concat(ret[l - 1]) // 合并最后两页
+    ret.splice(l - 2, 2)
+    ret.push(temp)
+  }
+
+  return ret
 }
 
 function parse (config) {

@@ -22,6 +22,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const parseArticleMeta = require('./parse-article-meta')
 const parseArticleMd = require('./parse-article-md')
+const events = require('./events')
 
 function readMd (path) {
   return new Promise((resolve, reject) => {
@@ -65,6 +66,7 @@ function parseArticle (config) {
         let dataMeta = parseArticleMeta(content)
         Object.assign(dataMeta, parseArticleMd(dataMeta))
         dataMeta.id = getArticleId(meta.mdList[i])
+        events.emit('parse-article-meta', dataMeta)
         data.push(dataMeta)
       })
 
